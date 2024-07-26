@@ -139,7 +139,7 @@ Python training GCNN0.py/GCNN01.py --input_dir path to directory containing trai
 
                                    --cuda indices of GPU to be used
 
-                              v    --seed random seed
+                                   --seed random seed
 ```
 
 For more options, please run the following code: 
