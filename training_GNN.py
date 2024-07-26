@@ -21,7 +21,7 @@ from scipy import stats
 import matplotlib.pyplot as plt
 import pandas as pd
 from model import GNN
-from utils import GNN_Dataset, model_dict_generator
+from utils import GNN_Dataset
 
 # print without omission
 np.set_printoptions(threshold=np.inf)
@@ -49,7 +49,6 @@ def train_GNN(training_csv, validation_csv, node_hdf, edge_ind_hdf, edge_attr_hd
     epochs = config['training_GNN']['epochs']  # number of training epochs
     batch_size = config['training_GNN']['batch_size']  # batch size to use for training
     learning_rate = config['training_GNN']['learning_rate']  # [0.1,0.01,0.001,0.0001]
-    out_channels = config['training_GNN']['out_channels']
     heads = config['training_GNN']['heads']
     ratio = config['training_GNN']['ratio']
 
@@ -59,7 +58,6 @@ def train_GNN(training_csv, validation_csv, node_hdf, edge_ind_hdf, edge_attr_hd
     print('epochs = %d' % epochs)
     print('batch size = %d' % batch_size)
     print('learning rate = %f' % learning_rate)
-    print('out channels = %d' % out_channels)
 
 
 
@@ -132,7 +130,7 @@ def train_GNN(training_csv, validation_csv, node_hdf, edge_ind_hdf, edge_attr_hd
                 'y_true': y_true, 'y_pred': y_pred, 'best_rmse': best_rmse}
 
     # construct model
-    model = GNN(out_channels, heads, ratio, concat=False, edge_dim=8)
+    model = GNN(heads=heads, ratio=ratio, concat=False, edge_dim=8)
 
     training_dataset = GNN_Dataset(training_csv, node_hdf, edge_attr_hdf, edge_ind_hdf)
     validation_dataset = GNN_Dataset(validation_csv, node_hdf, edge_attr_hdf, edge_ind_hdf)

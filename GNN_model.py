@@ -234,10 +234,13 @@ class GNN(torch.nn.Module):  # subclass of nn.Module
     LeakyReLu
     Linear 1
     """
-    def __init__(self, out_channels, heads, ratio, concat=False, edge_dim=8, negative_slope=0.01):
+    def __init__(self, out_channels=20, heads=10, ratio=0.3, concat=False, edge_dim=8, negative_slope=0.01):
         super(GNN, self).__init__()
         # attentional aggregation
-        self.GATlayer = GatedGATv2Conv(in_channels=-1, out_channels=out_channels, heads=heads, concat=concat,
+        self.out_channels = out_channels
+        self.heads = heads
+        self.ratio = ratio
+        self.GATlayer = GatedGATv2Conv(in_channels=-1, out_channels=20, heads=heads, concat=concat,
                                        edge_dim=edge_dim)
         self.pooling = SAGPooling(in_channels=3*out_channels, ratio=ratio)
         self.output = nn.Sequential(

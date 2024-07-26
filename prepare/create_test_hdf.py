@@ -1,3 +1,9 @@
+'''
+This process is largely inspired by Pafnucy <https://gitlab.com/cheminfIBB/pafnucy/-/blob/master/prepare.py>,
+    utilizing the tfbio package <https://gitlab.com/cheminfIBB/tfbio/-/blob/master/tfbio/data.py>
+'''
+
+import pickle
 import numpy as np
 import openbabel.pybel
 import pandas as pd
@@ -8,25 +14,10 @@ from tfbio.data import Featurizer
 import yaml
 import sys
 
-def create_hdf(affinity_data_path, output_node_hdf, output_edge_i_hdf, output_edge_a_hdf, training_PDBs_path,
-               validation_PDBs_path, path_to_elements_xml, bad_pdbids_input=[]):
+
+def create_test_hdf(affinity_data_path, output_node_hdf, output_edge_i_hdf, output_edge_a_hdf, test_PDBs_path,
+               path_to_elements_xml, bad_pdbids_input=[]):
     """
-    This function converts the mol2 files into one hdf file containing all complexes provided.
-    input:
-    1) path/to/cleaned/affinity/data.csv
-    2) path/to/output/node/file.hdf
-    3) path/to/output/edge_indices/file.hdf
-    4) path/to/output/edge_attributes/file.hdf
-    5) path/to/mol2/files
-    6) path/to/PDBs/in/general_set
-    7) path/to/PDBs/in/refined_set
-    8) path/to/elements.xml
-    9) bad_pdbids_input, an array containing any pdbids that crashed chimera or crashed this function. Set to [] by def
-    ault
- 
-    output:
-    1)  a complete hdf file containing featurized data for all of the PDB id's that will be used, saved as:
-        'path/to/output/hdf/file.hdf'
     """
 
     # define function to select pocket mol2 files with atoms that have unrealistic charges
@@ -62,7 +53,6 @@ def create_hdf(affinity_data_path, output_node_hdf, output_edge_i_hdf, output_ed
     element_dict = parse_element_description(path_to_elements_xml)
     affinities = pd.read_csv(affinity_data_path)
     pdbids_cleaned = affinities['pdbid'].to_numpy()
-    sets = affinities['set'].to_numpy()
     bad_complexes = bad_pdbids_input
     print(bad_complexes)
 
@@ -74,10 +64,11 @@ def create_hdf(affinity_data_path, output_node_hdf, output_edge_i_hdf, output_ed
 
     for i in range(len(pdbids_cleaned)):
         pdbid = pdbids_cleaned[i]
-        setsplit = sets[i]
 
         if pdbid in bad_complexes:
             continue
+
+        print('pdbid: %s' % pdbid)
 
         # check whether pdbid exists or not
         f1 = h5py.File(output_node_hdf, 'a')
@@ -88,12 +79,8 @@ def create_hdf(affinity_data_path, output_node_hdf, output_edge_i_hdf, output_ed
             continue
 
         # get names of pocket and ligand files
-        if setsplit == 'training':
-            pfile = training_PDBs_path + "/" + pdbid + '/' + pdbids_cleaned[i] + '_pocket.mol2'
-            lfile = training_PDBs_path + "/" + pdbids_cleaned[i] + '/' + pdbids_cleaned[i] + '_ligand.mol2'
-        else:
-            pfile = validation_PDBs_path + "/" + pdbids_cleaned[i] + '/' + pdbids_cleaned[i] + '_pocket.mol2'
-            lfile = validation_PDBs_path + "/" + pdbids_cleaned[i] + '/' + pdbids_cleaned[i] + '_ligand.mol2'
+        pfile = test_PDBs_path + "/" + pdbid + '/' + pdbids_cleaned[i] + '_pocket.mol2'
+        lfile = test_PDBs_path + "/" + pdbids_cleaned[i] + '/' + pdbids_cleaned[i] + '_ligand.mol2'
 
         print('pfile: %s' % pfile)
         print('lfile: %s' % lfile)
@@ -150,7 +137,7 @@ def create_hdf(affinity_data_path, output_node_hdf, output_edge_i_hdf, output_ed
             dset_node = f1.create_dataset(pdbid, data=data_node, shape=data_node.shape,
                                         dtype='float32', compression='lzf')
 
-            # add the affinity as attributes for this dataset
+            # add the affinity and van der Waals radii as attributes for this dataset
             dset_node.attrs['affinity'] = affinities_ind.loc[pdbid]
 
         # get indices and attributes of edges representing intermolecular interactions and bonds
@@ -189,13 +176,15 @@ configfile = sys.argv[1]
 with open(configfile, 'r', encoding='utf-8') as f:
     config = yaml.load(f.read(), Loader=yaml.FullLoader)
 
-affinity_data_path = config['create_hdf']['affinity_data_path']
-output_node_hdf = config['create_hdf']['output_node_hdf']
-output_edge_i_hdf = config['create_hdf']['output_edge_i_hdf']
-output_edge_a_hdf = config['create_hdf']['output_edge_a_hdf']
-training_PDBs_path = config['create_hdf']['training_PDBs_path']
-validation_PDBs_path = config['create_hdf']['validation_PDBs_path']
-path_to_elements_xml = config['create_hdf']['path_to_elements_xml']
+affinity_data_path = config['create_test_hdf']['affinity_data_path']
+output_node_hdf = config['create_test_hdf']['output_node_hdf']
+output_edge_i_hdf = config['create_test_hdf']['output_edge_i_hdf']
+output_edge_a_hdf = config['create_test_hdf']['output_edge_a_hdf']
+test_PDBs_path = config['create_test_hdf']['test_PDBs_path']
+path_to_elements_xml = config['create_test_hdf']['path_to_elements_xml']
 
-create_hdf(affinity_data_path, output_node_hdf, output_edge_i_hdf, output_edge_a_hdf, training_PDBs_path,
-           validation_PDBs_path, path_to_elements_xml, bad_pdbids_input=[])
+if __name__ == '__main__':
+    create_test_hdf(affinity_data_path, output_node_hdf, output_edge_i_hdf, output_edge_a_hdf, test_PDBs_path,
+               path_to_elements_xml, bad_pdbids_input=[])
+
+

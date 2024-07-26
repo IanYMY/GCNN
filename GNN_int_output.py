@@ -23,18 +23,15 @@ edge_attr_hdf = config['GNN_int_output']['edge_attr_hdf']
 edge_ind_hdf = config['GNN_int_output']['edge_ind_hdf']
 output_node_hdf = config['GNN_int_output']['output_node_hdf']
 
-
-out_channels = config['GNN_int_output']['out_channels']
 heads = config['GNN_int_output']['heads']
 ratio = config['GNN_int_output']['ratio']
 best_checkpoint_path = config['GNN_int_output']['best_checkpoint_path']
-log_path = config['GNN_int_output']['log_path']
 batch_size = 1
 
 
 device = "cuda:0" if torch.cuda.is_available() else "cpu"
 
-model = GNN(out_channels, heads, ratio)
+model = GNN(heads=heads, ratio=ratio)
 model.to(device)
 
 best_chehckpoint_dict = torch.load(best_checkpoint_path)

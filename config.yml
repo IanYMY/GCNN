@@ -1,0 +1,49 @@
+create_hdf: 
+  affinity_data_path: 
+  output_node_hdf: 
+  output_edge_i_hdf: 
+  output_edge_a_hdf: 
+  training_PDBs_path: 
+  validation_PDBs_path: 
+  path_to_elements_xml: 
+
+creat_test_hdf: 
+  affinity_data_path: 
+  output_node_hdf: 
+  output_edge_i_hdf: 
+  output_edge_a_hdf: 
+  test_PDBs_path: 
+  path_to_elements_xml: 
+
+training_GNN:
+  seed:
+  epochs: 
+  batch_size: 
+  learning_rate: 
+  heads: 
+  ratio: 
+  training_csv:
+  validation_csv: 
+  node_hdf: 
+  edge_ind_hdf: 
+  edge_attr_hdf: 
+  checkpoint_path: 
+  best_checkpoint_path: 
+  log_path: 
+
+GNN_int_output:
+  heads: 
+  ratio: 
+  best_checkpoint_path: 
+  dataset_csv: 
+  node_hdf: 
+  edge_ind_hdf: 
+  edge_attr_hdf: 
+  output_node_hdf: 
+
+split_hdf:
+  csv_file:
+  node_file:
+  path:
+  dataset_name:
+
