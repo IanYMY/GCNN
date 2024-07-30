@@ -145,7 +145,7 @@ Python training_GCNN0.py/training_GCNN01.py --input_dir path to directory contai
 For more options, please run the following code: 
 
 ```powershell
-Python training GCNN0.py/GCNN01.py --help
+Python training_GCNN0.py/training_GCNN01.py --help
 ```
 
 # Predicting
