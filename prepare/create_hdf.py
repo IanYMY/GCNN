@@ -198,4 +198,8 @@ validation_PDBs_path = config['create_hdf']['validation_PDBs_path']
 path_to_elements_xml = config['create_hdf']['path_to_elements_xml']
 
 create_hdf(affinity_data_path, output_node_hdf, output_edge_i_hdf, output_edge_a_hdf, training_PDBs_path,
-           validation_PDBs_path, path_to_elements_xml, bad_pdbids_input=[])
+           validation_PDBs_path, path_to_elements_xml, bad_pdbids_input=['2r1w', '3sl0', '3sl1', '2y4a', '3skk', '5fom',
+                                                                         '6hwz', '4ob0', '5agr', '4lv3','3bho', '3zjt',
+                                                                         '3mke', '6hx5', '3zju', '4wku', '3sjt', '4u0x',
+                                                                         '6rtn', '5ee8', '5eec', '5agt', '3mnu', '4lv1',
+                                                                         '5ags', '3fkv', '3ixg', '4lv2', '5wad', '6c8x'])
