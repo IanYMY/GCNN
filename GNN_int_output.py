@@ -58,9 +58,7 @@ with torch.no_grad():
 
         # get intermediate outputs as new features
         feature = model.feature
-        index = model.index
         features.append(feature.cpu())
-        indices.append(index.cpu())
 
 pdbids = list(np.loadtxt(dataset_csv, dtype=str, delimiter=",", skiprows=1, usecols=0))
 badcomplexes = ['2r1w', '3sl0', '3sl1', '2y4a', '3skk', '5fom', '6hwz', '4ob0', '5agr', '4lv3',
@@ -76,9 +74,7 @@ f = h5py.File(node_hdf)
 
 for i in range(len(pdbids)):
     pdbid = pdbids[i]
-    index = indices[i]
     coordinate = f[pdbid][:, 0:4]
-    coordinate = np.take(coordinate, index, axis=0)
     coordinate = torch.from_numpy(coordinate)
     feature = torch.tensor(features[i])
     new_feature = torch.concat((coordinate, feature), dim=1)

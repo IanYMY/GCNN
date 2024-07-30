@@ -20,7 +20,7 @@ import random
 from scipy import stats
 import matplotlib.pyplot as plt
 import pandas as pd
-from model import GNN
+from GNN_model import GNN
 from utils import GNN_Dataset
 
 # print without omission
@@ -42,7 +42,6 @@ def train_GNN(training_csv, validation_csv, node_hdf, edge_ind_hdf, edge_attr_hd
     """
 
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model_dict = model_dict_generator()
 
     # define hyperparameters
     seed = config['training_GNN']['seed']
