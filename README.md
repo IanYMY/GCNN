@@ -135,7 +135,7 @@ Python prepare/split_hdf.py config.yml
 Run the following code to train GCNN0/01: 
 
 ```powershell
-Python training GCNN0.py/GCNN01.py --input_dir path to directory containing training_set.hdf and validation_set.hdf
+Python training_GCNN0.py/training_GCNN01.py --input_dir path to directory containing training_set.hdf and validation_set.hdf
 
                                    --cuda indices of GPU to be used
 
