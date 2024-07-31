@@ -7,7 +7,7 @@ create_hdf:
   validation_PDBs_path: 
   path_to_elements_xml: 
 
-creat_test_hdf: 
+create_test_hdf: 
   affinity_data_path: 
   output_node_hdf: 
   output_edge_i_hdf: 
