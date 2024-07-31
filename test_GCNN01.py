@@ -109,7 +109,7 @@ featurizer = Featurizer()
 coords = []
 features = []
 names = []
-labels = []
+affinities = []
 
 with h5py.File(args.input, 'r') as f:
     for name in f:
@@ -118,12 +118,8 @@ with h5py.File(args.input, 'r') as f:
         coords.append(dataset[:, :3])
         indices = np.append(np.arange(4, 23), np.arange(24, 44))
         features.append(np.take(dataset, indices, axis=1))
-        label = dataset.attrs['affinity']
-        if label == 1:
-            label = 'active'
-        else:
-            label = 'unactive'
-        labels.append(label)
+        affinity = dataset.attrs['affinity']
+        affinities.append(affinity)
 
 
 if args.verbose:
@@ -174,7 +170,7 @@ with tf.Session() as session:
         predictions.append(session.run(predict, feed_dict={inp: grid, kp: 1.0}))
 
 results = pd.DataFrame({'name': names,
-                        'type': labels,
+                        'type': affinities,
                         'prediction': np.vstack(predictions).flatten()})
 results.to_csv(args.output, index=False)
 if args.verbose:

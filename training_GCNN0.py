@@ -22,7 +22,7 @@ import seaborn as sns
 sns.set_style('white')
 sns.set_context('paper')
 sns.set_color_codes()
-color = {'training': 'b', 'validation': 'g', 'test': 'r'}
+color = {'training': 'b', 'validation': 'g'}
 
 import time
 timestamp = time.strftime('%Y-%m-%dT%H:%M:%S')
@@ -53,7 +53,7 @@ parser = argparse.ArgumentParser(
 
 io_group = parser.add_argument_group('I/O')
 io_group.add_argument('--input_dir', '-i', required=True, type=input_dir,
-                      help='directory with training, validation and test sets')
+                      help='directory with training and validation set')
 io_group.add_argument('--log_dir', '-l', default='./logdir/',
                       help='directory to store tensorboard summaries')
 io_group.add_argument('--output_prefix', '-o', default='./output',
@@ -178,7 +178,6 @@ print('')
 print('learning rate', args.learning_rate)
 print(num_batches['training'], 'batches,', args.batch_size, 'examples each')
 print(num_batches['validation'], 'validation batches')
-print(num_batches['test'], 'test batches')
 print('')
 print(args.num_epochs, 'epochs, best', args.to_keep, 'saved')
 
