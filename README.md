@@ -60,7 +60,7 @@ path_to_elements_xml: 'path to element_features.xml'
 Run the following code to generate features of training and validation set: 
 
 ```powershell
-Python prepare/create_hdf.py config.yml
+python prepare/create_hdf.py config.yml
 ```
 
 ## Training GNN
@@ -78,7 +78,7 @@ ratio: pooling ratio in SAGPool layer
 training_csv: 'path to csv file containing affinity data of training set'
 validation_csv: 'path to csv file containing affinity data of validation set'
 node_hdf: 'path to hdf file containing node features'
-edge_ind_hdf: 'path to hdf file containing edge indices'
+epdge_ind_hdf: 'path to hdf file containing edge indices'
 edge_attr_hdf: 'path to hdf file containing edge attributes'
 checkpoint_path: 'path to output checkpoint'
 best_checkpoint_path: 'path to output best checkpoint'
@@ -88,7 +88,7 @@ log_path: 'path to directory to store output results'
 Run the following code to train GNN module: 
 
 ```powershell
-Python training_GNN.py config.yml
+python training_GNN.py config.yml
 ```
 
 ## Extracting Intermediate Output of GNN
@@ -110,7 +110,7 @@ output_node_hdf: 'path to output hdf file containing new node features of GNN'
 Run the following code to extract intermediate output of GNN as input grid features of CNN: 
 
 ```powershell
-Python GNN_int_output.py config.yml
+python GNN_int_output.py config.yml
 ```
 
 ## Splitting Hdf File of Training and Validation set
@@ -127,7 +127,7 @@ dataset_name: 'training'/'validation'
 Run the following code to split the hdf file of training and validation set:
 
 ```powershell
-Python prepare/split_hdf.py config.yml
+python prepare/split_hdf.py config.yml
 ```
 
 ## Training GCNN0/01
@@ -135,7 +135,7 @@ Python prepare/split_hdf.py config.yml
 Run the following code to train GCNN0/01: 
 
 ```powershell
-Python training_GCNN0.py/training_GCNN01.py --input_dir path to directory containing training_set.hdf and validation_set.hdf
+python training_GCNN0.py/training_GCNN01.py --input_dir path to directory containing training_set.hdf and validation_set.hdf
 
                                    --cuda indices of GPU to be used
 
@@ -145,7 +145,7 @@ Python training_GCNN0.py/training_GCNN01.py --input_dir path to directory contai
 For more options, please run the following code: 
 
 ```powershell
-Python training_GCNN0.py/training_GCNN01.py --help
+python training_GCNN0.py/training_GCNN01.py --help
 ```
 
 # Predicting
@@ -166,7 +166,7 @@ path_to_elements_xml: 'path to element_features.xml'
 Run the following code to generate features of test set:
 
 ```powershell
-Python create_test_hdf.py config.yml
+python prepare/create_test_hdf.py config.yml
 ```
 
 ## Extracting Intermediate Output of GNN
@@ -188,7 +188,7 @@ output_node_hdf: 'path to output hdf file containing new node features of GNN'
 Run the following code to extract intermediate output of GNN as input grid features of CNN:
 
 ```powershell
-Python GNN_int_output.py config.yml
+python GNN_int_output.py config.yml
 ```
 
 ## Predicting Binding Affinity Using GCNN0/01
@@ -196,7 +196,7 @@ Python GNN_int_output.py config.yml
 Run the following code:
 
 ```powershell
-Python test_GCNN0.py/test_GCNN01.py --input path to hdf file containing new node features of GNN
+python test_GCNN0.py/test_GCNN01.py --input path to hdf file containing new node features of GNN
 
                                     --network path to file containing model parameters (delete “.meta” )
 
@@ -206,7 +206,7 @@ Python test_GCNN0.py/test_GCNN01.py --input path to hdf file containing new node
 For more options, please run the following code:
 
 ```powershell
-Python test_GCNN0.py/test_GCNN01.py --help
+python test_GCNN0.py/test_GCNN01.py --help
 ```
 
 ‍
