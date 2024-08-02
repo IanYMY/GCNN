@@ -1,3 +1,38 @@
+"""
+These codes are modified from Pafnucy (https://gitlab.com/cheminfIBB/pafnucy). The original project is licensed under
+the BSD 3-Clause License, and the original copyright statement is retained below:
+
+BSD 3-Clause License
+
+Copyright (c) 2018, cheminfIBB
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+"""
+
 import numpy as np
 import openbabel.pybel
 import pandas as pd
@@ -10,24 +45,6 @@ import sys
 
 def create_hdf(affinity_data_path, output_node_hdf, output_edge_i_hdf, output_edge_a_hdf, training_PDBs_path,
                validation_PDBs_path, path_to_elements_xml, bad_pdbids_input=[]):
-    """
-    This function converts the mol2 files into one hdf file containing all complexes provided.
-    input:
-    1) path/to/cleaned/affinity/data.csv
-    2) path/to/output/node/file.hdf
-    3) path/to/output/edge_indices/file.hdf
-    4) path/to/output/edge_attributes/file.hdf
-    5) path/to/mol2/files
-    6) path/to/PDBs/in/general_set
-    7) path/to/PDBs/in/refined_set
-    8) path/to/elements.xml
-    9) bad_pdbids_input, an array containing any pdbids that crashed chimera or crashed this function. Set to [] by def
-    ault
- 
-    output:
-    1)  a complete hdf file containing featurized data for all of the PDB id's that will be used, saved as:
-        'path/to/output/hdf/file.hdf'
-    """
 
     # define function to select pocket mol2 files with atoms that have unrealistic charges
     def high_charge(molecule):
