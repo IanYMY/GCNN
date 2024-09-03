@@ -1,6 +1,6 @@
 # README
 
-This is the repository for GCNN (link)
+This is the repository for GCNN (https://onlinelibrary.wiley.com/doi/10.1002/jcc.27499)
 
 ​![Figure](Figure/Figure.jpg)​
 
